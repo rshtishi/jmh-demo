@@ -1,5 +1,8 @@
 package com.github.rshtishi;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Fibonacci {
 
     static int calculate(int n) {
@@ -21,5 +24,21 @@ public class Fibonacci {
 
         // Recursive call
         return recursiveCalculate(n - 1) + recursiveCalculate(n - 2);
+    }
+
+    static int memoizationCalculate(int n, Map<Integer,Integer> map){
+        if(map==null){
+            map = new HashMap<>();
+        } else {
+            if(map.containsKey(n)){
+                return map.get(n);
+            }
+        }
+        // Base Case
+        if (n <= 1)
+            return n;
+        int fibbonaci = memoizationCalculate(n-1,map)+memoizationCalculate(n-2,map);
+        map.put(n,fibbonaci);
+        return fibbonaci;
     }
 }
