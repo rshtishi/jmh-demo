@@ -25,4 +25,9 @@ public class FibonacciBenchmark {
         Fibonacci.memoizationCalculate(10, new HashMap<>());
     }
 
+    @Benchmark
+    public void testTabulationCalcualteFibonacci(){
+        Fibonacci.tabulationCalculate(10);
+    }
+
 }

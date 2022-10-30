@@ -26,19 +26,29 @@ public class Fibonacci {
         return recursiveCalculate(n - 1) + recursiveCalculate(n - 2);
     }
 
-    static int memoizationCalculate(int n, Map<Integer,Integer> map){
-        if(map==null){
+    static int memoizationCalculate(int n, Map<Integer, Integer> map) {
+        if (map == null) {
             map = new HashMap<>();
         } else {
-            if(map.containsKey(n)){
+            if (map.containsKey(n)) {
                 return map.get(n);
             }
         }
         // Base Case
         if (n <= 1)
             return n;
-        int fibbonaci = memoizationCalculate(n-1,map)+memoizationCalculate(n-2,map);
-        map.put(n,fibbonaci);
+        int fibbonaci = memoizationCalculate(n - 1, map) + memoizationCalculate(n - 2, map);
+        map.put(n, fibbonaci);
         return fibbonaci;
+    }
+
+    static int tabulationCalculate(int n) {
+        int[] array = new int[n + 2];
+        array[1] = 1;
+        for (int i = 0; i < n; i++) {
+            array[i+1]+=array[i];
+            array[i+2]+=array[i];
+        }
+        return array[n];
     }
 }
