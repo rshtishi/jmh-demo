@@ -18,7 +18,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.github.rshtishi.App</mainClass>
+                  <mainClass>com.github.rshtishi.BenchmarkRunner</mainClass>
                 </transformer>
               </transformers>
               <filters>
