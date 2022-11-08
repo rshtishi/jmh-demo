@@ -113,10 +113,19 @@ We saw after the modification of the methods the performance dropped to more rea
 After applying the changes above we will get the following benchmark results:
 
 ```
-testSqrt ran 22790.110241 ops/ms/n
-testJavaSqrt ran 47325.639920 ops/ms/n
-testConstant ran 49956.275770 ops/ms/n
+testSqrt ran         22790.110241 ops/ms/n
+testJavaSqrt ran     40325.639920 ops/ms/n
+testConstant ran     49956.275770 ops/ms/n
 ```
+
+JMH makes it much easier to write and run benchmarks by providing a very solid foundation for writing and running benchmarks whose results are not erroneous due to unwanted virtual machine optimizations.
+
+
+### JMH Architecture
+
+
+
+
 
 
 
