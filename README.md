@@ -123,6 +123,14 @@ JMH makes it much easier to write and run benchmarks by providing a very solid f
 
 ### JMH Architecture
 
+![JMH Architecture](https://github.com/rshtishi/jmh-demo/blob/master/jmh-exec.png)
+
+- **Fork** is also called a trial. In the above example output, you can see it is performed two trials. A trial contains a set of warmups and iterations.
+- **Warmup**: JMH does runs of a given benchmark but it discards the results. It's role is to allow the JVM to perform any class loading, compilation to native code, and caching steps it would normally do in a long-running application before starting to collect actual results and perform analysis.
+- **Iterations**: Execute benchmark after the warmup iterations. JMH uses only the result from running benchmark in the iterations phase to perform perfomance analysis.
+- **Invocation**: is a sngle run of benchmark.
+- **Setup** marks the fixture method to be run before the benchmark.
+- **TearDown** marks the fixture method to be run after the benchmark..
 
 
 
@@ -131,3 +139,5 @@ JMH makes it much easier to write and run benchmarks by providing a very solid f
 
 
 
+
+'
