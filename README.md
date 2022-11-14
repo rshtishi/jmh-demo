@@ -121,7 +121,7 @@ testConstant ran     49956.275770 ops/ms/n
 JMH makes it much easier to write and run benchmarks by providing a very solid foundation for writing and running benchmarks whose results are not erroneous due to unwanted virtual machine optimizations.
 
 
-### JMH Architecture
+### JMH Architecture Overview
 
 ![JMH Architecture](https://github.com/rshtishi/jmh-demo/blob/master/jmh-exec.png)
 
@@ -133,11 +133,97 @@ JMH makes it much easier to write and run benchmarks by providing a very solid f
 - **TearDown** marks the fixture method to be run after the benchmark..
 
 
+### Getting Started
+
+If we want to kickstart a new JMH project for testing different pieces of our software we can use the Maven archetype for JMH like the below:
+
+```
+mvn archetype:generate
+          -DinteractiveMode=false
+          -DarchetypeGroupId=org.openjdk.jmh
+          -DarchetypeArtifactId=jmh-java-benchmark-archetype
+          -DgroupId=com.jenko     
+          -DartifactId=first-benchmark
+          -Dversion=1.0
+```
+
+In order to include JMH in the existing project, we need to provide the following dependencies in the project pom file:
+
+```
+<dependency>
+    <groupId>org.openjdk.jmh</groupId>
+    <artifactId>jmh-core</artifactId>
+    <version>X.X.X</version>
+</dependency>
+<dependency>
+    <groupId>org.openjdk.jmh</groupId>
+    <artifactId>jmh-generator-annprocess</artifactId>
+    <version>
+```
+
+After adding the dependencies, we add the main class that starts the benchmarking process:
+
+```
+public class BenchmarkRunner {
+    public static void main(String[] args) throws IOException, RunnerException {
+        org.openjdk.jmh.Main.main(args);
+    }
+}
+```
+
+To create a benchmark we need to add the annotation `@Benchmark` to the method that will measure the code performance, like below:
+
+```
+    @Benchmark
+    public void testCalculateFibonacci(){
+        Fibonacci.calculate(10);
+    }
+```
 
 
+### JMH - Types of Benchmark
 
+We have different types of benchmarks that measure various aspects of code performance:
 
+- **Throughput** - measures the number of operations per second
+- **Average Time** - measures the average time it takes for the benchmark method to execute (a single execution).
+- **Sample Time** - Measures how long time it takes for the benchmark method to execute, including max, min time etc.
+- **Single Shot Time** - measures how long time a single benchmark method execution takes to run. This is good to test how it performs under a cold start (no JVM warm up).
+- **All** -  measures all of the above.
 
+These can be configured via @BenchmarkMode annotation, e.g. :
+
+```
+    @BenchmarkMode(Mode.AverageTime)
+    @Benchmark
+    public void testCalculateFibonacci(){
+        Fibonacci.calculate(10);
+    }
+```
+
+### JMH - Time Units
+
+JMH supports various time units: 
+
+ - NANOSECONDS 
+ - MICROSECONDS  
+ - MILLISECONDS  
+ - SECONDS  
+ - MINUTES  
+ - HOURS  
+ - DAYS
+ 
+ These can be configured via  @OutputTimeUnit annotation, e.g. :
+ 
+ ```
+    @OutputTimeUnit(TimeUnit.NANOSECONDS)
+    @Benchmark
+    public void testCalculateFibonacci(){
+        Fibonacci.calculate(10);
+    }
+ ```
+ 
+ 
 
 
 '
