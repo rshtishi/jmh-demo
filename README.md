@@ -223,6 +223,52 @@ JMH supports various time units:
     }
  ```
  
+ ### Configuring Warmup and Execution
+ 
+The ```@Fork``` annotation, instructs how benchmark trials (forks) will happen. The value parameter controls how many times the trials are going to run for the benchmark, and the warmup parameter controls how many times a benchmark will run before results are collected. The executions result from the warmup are discarded. After the warmup executions are finished then we proceed with trial executions. E.g. :
+   
+  ```
+@Benchmark
+@Fork(value = 5, warmups = 3)
+public void testCalculateFibonacci(){
+    Fibonacci.calculate(10);
+}
+  ```
+  
+The example above instructs JMH to run 8 forks(trials) sequentially. The first three will be warmup and results will be discarded and the final 5 fork results will be collected to be used for benchmarking. A trial(fork) is a set of warmup execution and measurement executions of the method that we are going to benchmark.
+
+The ```@Warmup``` annotation determines the number of warmup executions inside a fork(trial).
+
+```
+@Benchmark
+@Warmup(iterations = 5)
+public void testCalculateFibonacci(){
+    Fibonacci.calculate(10);
+}
+```
+
+The example above instructs JMH to run 5 warmup executions before starting measurement execution for each fork(trial).
+
+The `@Measurement``` annotation determines the number of measurement execution inside a fork(trial).
+
+```
+@Benchmark
+@Measurement(iterations = 5)
+public void testCalculateFibonacci(){
+    Fibonacci.calculate(10);
+}
+```
+
+The example above instructs JMH to run 5 measurement execution inside a fork(trial).
+
+![JMH Demo](jmh-forks.png)
+
+
+  
+  
+  
+  
+ 
  
 
 
