@@ -225,7 +225,7 @@ JMH supports various time units:
  
  ### Configuring Warmup and Execution
  
-The ```@Fork``` annotation, instructs how benchmark trials (forks) will happen. The value parameter controls how many times the trials are going to run for the benchmark, and the warmup parameter controls how many times a benchmark will run before results are collected. The executions result from the warmup are discarded. After the warmup executions are finished then we proceed with trial executions. E.g. :
+The ```@Fork``` annotation, instructs how many benchmark trials (forks) will happen. The value parameter controls how many times the trials are going to run for the benchmark, and the warmup parameter controls how many times a benchmark will run before results are collected. The executions result from the warmup are discarded. After the warmup executions are finished then we proceed with trial executions. E.g. :
    
   ```
 @Benchmark
@@ -262,6 +262,38 @@ public void testCalculateFibonacci(){
 The example above instructs JMH to run 5 measurement execution inside a fork(trial).
 
 ![JMH Demo](jmh-forks.png)
+
+### State 
+
+In some cases, you need to initialize variables that your benchmark will need but you don't want the initializing process to be part of the code that the benchmark measures. JMH offers a solution to this problem called state variables. State variables are declared in special state classes, and an instance of that state class can then be provided as a parameter to the benchmark method. The state class needs to be annotated with the @State annotation. Also, the state object should follow the below standards:
+
+- The class must be declared public
+- If the class is nested, then it should be a static class
+- The class must have a public no-parameter constructor
+
+E.g:
+
+```
+    @State(Scope.Benchmark)
+    public static class FibonacciState {
+        @Param({"5", "6"})
+        public int value;
+    }
+
+    @Benchmark
+    public void testCalculateFibonaccix(FibonacciState state){
+        Fibonacci.calculate(state.value);
+    }
+```
+
+The scope of the state object defines to which	extent it is shared	among the worker threads. States can be injected into benchmark methods as arguments, and also on ```@Setup``` and ```@TearDown```	methods. JMH provides different scopes that the state object can be reused. These are:
+
+- **Thread**: each thread running the benchmark will create its own instance of the state object
+- **Group**: each thread group running the benchmark will create its own instance of the state object
+- **Benchmark**: all threads running the benchmark share the same state object
+
+
+
 
 
   
