@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.AverageTime)
-@Fork(value = 1, jvmArgs = {"-Xms2G", "-Xmx2G"})
+@Fork(value = 2,warmups = 1, jvmArgs = {"-Xms2G", "-Xmx2G"})
 public class ObjectCreationBenchmark {
 
     @Benchmark

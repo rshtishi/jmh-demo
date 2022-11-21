@@ -4,8 +4,8 @@ public class CustomBenchmark {
 
     public static void main(String[] args) {
 
-        testSqrt();
-        testJavaSqrt();
+        testSqrt(num);
+        testJavaSqrt(num);
         testConstant();
 
     }
@@ -32,14 +32,20 @@ public class CustomBenchmark {
         return 10d;
     }
 
-    private static void testSqrt() {
-        benchamark(1_000_000, () -> sqrt(10));
+    static double num = 10;
+
+    private static double testSqrt(double num) {
+        double[] placeholder = new double[1];
+        benchamark(1_000_000, () -> placeholder[0] = sqrt(num));
         System.out.println();
+        return placeholder[0];
     }
 
-    private static void testJavaSqrt() {
-        benchamark(1_000_000, () -> javaSqrt(10));
+    private static double testJavaSqrt(double num) {
+        double[] placeholder = new double[1];
+        benchamark(1_000_000, () -> placeholder[0] = javaSqrt(num));
         System.out.println();
+        return placeholder[0];
     }
 
     private static void testConstant() {
