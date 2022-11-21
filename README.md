@@ -235,7 +235,7 @@ public void testCalculateFibonacci(){
 }
   ```
   
-The example above instructs JMH to run 8 forks(trials) sequentially. The first three will be warmup and results will be discarded and the final 5 fork results will be collected to be used for benchmarking. A trial(fork) is a set of warmup execution and measurement executions of the method that we are going to benchmark.
+The example above instructs JMH to run 5 forks(trials) sequentially. The first three iterations will be warmup and results will be discarded.
 
 The ```@Warmup``` annotation determines the number of warmup executions inside a fork(trial).
 
@@ -293,7 +293,37 @@ The scope of the state object defines to which	extent it is shared	among the wor
 - **Benchmark**: all threads running the benchmark share the same state object
 
 
+We use the `@Setup` annotation on the method that will initialize with the state object before it's passed down to the benchmark. Also, we use the `@Teardown` annotation on the method that will clean the state object. The setup and tear-down execution time are not included in the benchmark runtime measurements. E.g. :
 
+```
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Fork(value = 1, jvmArgs = {"-Xms2G", "-Xmx2G"})
+public class SearchBenchmark {
+
+    @State(Scope.Benchmark)
+    public static class SearchState {
+        @Param({"1", "10", "100"})
+        public int parameter;
+        public List<Integer> list;
+
+        @Setup(Level.Trial)
+        public void setup() {
+            list = IntStream.range(1, 100).boxed().collect(Collectors.toList());
+        }
+
+        @TearDown
+        public void tearDown(){
+            list = null;
+        }
+    }
+
+    @Benchmark
+    public void streamSearchBenchamrk(SearchState searchState){
+        searchState.list.stream().anyMatch( i -> i==searchState.parameter);
+    }
+}
+```
 
 
   
