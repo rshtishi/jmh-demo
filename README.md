@@ -325,9 +325,40 @@ public class SearchBenchmark {
 }
 ```
 
+Both `@Setup` and `@Teardown` annotations have a parameter that instructs JMH when to call the methods. The possible values that can be passed are:
 
-  
-  
+- Level.Trial - is called for each full run of the fork(including warmup and measurement iterations)
+- Level.Iteration - is called for each iteration of the benchmark
+- Level.Invocation - is called for each call of the benchmark method
+
+
+ 
+ ### JVM optimization 
+ 
+ 
+ #### Dead Code Elimination
+ 
+We faced the same issue in our example in the beginning when we weren't using the JMH framework to benchmark code. We solved the issue by returning the object. This way we tricked the compiler to think that the code is being used by some other component.
+
+JMH offers us another option to prevent dead code elimination optimization. It provides us with a `BlackHole` object that we can use to consume objects instead of returning them as we did before. Below is an example of using a black hole object to prevent dead code elimination optimization:
+
+```
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Fork(value = 1, jvmArgs = {"-Xms2G", "-Xmx2G"})
+public class FibonacciBenchmark {
+
+    @Benchmark
+    public void testCalculateFibonacci(Blackhole blackhole){
+        int result = Fibonacci.calculate(10);
+        blackhole.consume(result);
+    }
+}
+```
+
+#### Constant Folding
+
+
   
   
  
