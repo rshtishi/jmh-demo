@@ -1,6 +1,7 @@
 package com.github.rshtishi;
 
 import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -23,14 +24,14 @@ public class SearchBenchmark {
             list = IntStream.range(1, 100).boxed().collect(Collectors.toList());
         }
 
-        @TearDown
-        public void tearDown(){
+        @TearDown(Level.Trial)
+        public void tearDown() {
             list = null;
         }
     }
 
     @Benchmark
-    public void streamSearchBenchamrk(SearchState searchState){
-        searchState.list.stream().anyMatch( i -> i==searchState.parameter);
+    public void streamSearchBenchamrk(SearchState searchState, Blackhole blackhole) {
+        blackhole.consume(searchState.list.stream().anyMatch(i -> i == searchState.parameter));
     }
 }
