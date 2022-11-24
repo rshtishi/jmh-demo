@@ -358,7 +358,20 @@ public class FibonacciBenchmark {
 
 #### Constant Folding
 
+We avoided constant folding in our first example by removing the constants from our benchmark and passing it by parameter. With JMH we can bypass constant folding optimization by passing the input through the state object, this way we encapsulate constants in the state objects. Below is an example of constant folding solved with JMH:
 
+```
+    @State(Scope.Benchmark)
+    public static class FibonacciState {
+        @Param({"5", "6"})
+        public int value;
+    }
+
+    @Benchmark
+    public void testCalculateFibonaccix(FibonacciState state){
+        Fibonacci.calculate(state.value);
+    }
+```
   
   
  
