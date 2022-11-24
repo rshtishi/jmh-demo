@@ -312,7 +312,7 @@ public class SearchBenchmark {
             list = IntStream.range(1, 100).boxed().collect(Collectors.toList());
         }
 
-        @TearDown
+        @TearDown(Level.Trial)
         public void tearDown(){
             list = null;
         }
