@@ -1,6 +1,7 @@
 package com.github.rshtishi;
 
 import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,8 +17,8 @@ public class FibonacciStateBenchmark {
     }
 
     @Benchmark
-    public void testCalculateFibonaccix(FibonacciState state){
-        Fibonacci.calculate(state.value);
+    public void testCalculateFibonaccix(FibonacciState state, Blackhole blackhole) {
+        blackhole.consume(Fibonacci.calculate(state.value));
     }
 
 }
