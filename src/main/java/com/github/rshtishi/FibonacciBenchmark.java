@@ -36,7 +36,7 @@ public class FibonacciBenchmark {
     }
 
     @Benchmark
-    public void testTabulationCalcualteFibonacci(FibonacciState state, Blackhole blackHole) {
+    public void testTabulationCalculateFibonacci(FibonacciState state, Blackhole blackHole) {
         int result = Fibonacci.tabulationCalculate(state.value);
         blackHole.consume(result);
     }
