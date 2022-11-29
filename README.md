@@ -128,7 +128,7 @@ JMH makes it much easier to write and run benchmarks by providing a very solid f
 - **Fork** is also called a trial. In the above example output, you can see it is performed two trials. A trial contains a set of warmups and iterations.
 - **Warmup**: JMH does runs of a given benchmark but it discards the results. It's role is to allow the JVM to perform any class loading, compilation to native code, and caching steps it would normally do in a long-running application before starting to collect actual results and perform analysis.
 - **Iterations**: Execute benchmark after the warmup iterations. JMH uses only the result from running benchmark in the iterations phase to perform perfomance analysis.
-- **Invocation**: is a sngle run of benchmark.
+- **Invocation**: is a single run of benchmark.
 - **Setup** marks the fixture method to be run before the benchmark.
 - **TearDown** marks the fixture method to be run after the benchmark..
 
@@ -213,7 +213,7 @@ JMH supports various time units:
  - HOURS  
  - DAYS
  
- These can be configured via  @OutputTimeUnit annotation, e.g. :
+ These can be configured via  ```@OutputTimeUnit``` annotation, e.g. :
  
  ```
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -249,7 +249,7 @@ public void testCalculateFibonacci(){
 
 The example above instructs JMH to run 5 warmup executions before starting measurement execution for each fork(trial).
 
-The `@Measurement``` annotation determines the number of measurement execution inside a fork(trial).
+The ```@Measurement``` annotation determines the number of measurement execution inside a fork(trial).
 
 ```
 @Benchmark
