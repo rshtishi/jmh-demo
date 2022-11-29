@@ -1,5 +1,6 @@
-package com.github.rshtishi;
+package com.github.rshtishi.benchmark;
 
+import com.github.rshtishi.algorythms.Fibonacci;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
@@ -13,7 +14,7 @@ public class FibonacciBenchmark {
 
     @State(Scope.Benchmark)
     public static class FibonacciState {
-        @Param({"5"})
+        @Param({"15"})
         public int value;
     }
 

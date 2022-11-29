@@ -1,5 +1,6 @@
-package com.github.rshtishi;
+package com.github.rshtishi.benchmark;
 
+import com.github.rshtishi.algorythms.Fibonacci;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 

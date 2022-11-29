@@ -1,4 +1,4 @@
-package com.github.rshtishi;
+package com.github.rshtishi.benchmark;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;

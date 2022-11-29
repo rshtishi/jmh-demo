@@ -1,4 +1,4 @@
-package com.github.rshtishi;
+package com.github.rshtishi.misc;
 
 public class CustomBenchmark {
 

@@ -1,11 +1,11 @@
-package com.github.rshtishi;
+package com.github.rshtishi.algorythms;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Fibonacci {
 
-    static int calculate(int n) {
+    public static int calculate(int n) {
         int fib1 = 1;
         int fib2 = 1;
         int fibonacci = fib1;
@@ -17,7 +17,7 @@ public class Fibonacci {
         return fibonacci;
     }
 
-    static int recursiveCalculate(int n) {
+    public static int recursiveCalculate(int n) {
         // Base Case
         if (n <= 1)
             return n;
@@ -26,7 +26,7 @@ public class Fibonacci {
         return recursiveCalculate(n - 1) + recursiveCalculate(n - 2);
     }
 
-    static int memoizationCalculate(int n, Map<Integer, Integer> map) {
+    public static int memoizationCalculate(int n, Map<Integer, Integer> map) {
         if (map == null) {
             map = new HashMap<>();
         } else {
@@ -42,7 +42,7 @@ public class Fibonacci {
         return fibbonaci;
     }
 
-    static int tabulationCalculate(int n) {
+    public static int tabulationCalculate(int n) {
         int[] array = new int[n + 2];
         array[1] = 1;
         for (int i = 0; i < n; i++) {
